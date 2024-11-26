@@ -17,7 +17,6 @@ This PHP-based integration project provides functionality for managing Digimart 
 - `list.php` - List management
 - `subscribe.php` - Subscription handling
 - `unsubscribe.php` - Unsubscription handling
-- `demo/` - Demo implementation files
 
 ## Configuration Variables
 
