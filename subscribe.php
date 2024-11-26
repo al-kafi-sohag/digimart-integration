@@ -195,10 +195,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     </h5>
                                     <div class="table-responsive">
                                         <table class="table table-sm table-bordered details-table">
-                                            <tr>
-                                                <th class="bg-light">API Key</th>
-                                                <td><code><?php echo htmlspecialchars(API_KEY); ?></code></td>
-                                            </tr>
+                                            
                                             <tr>
                                                 <th class="bg-light">Request ID</th>
                                                 <td><code><?php echo htmlspecialchars($request_id); ?></code></td>
