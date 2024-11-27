@@ -4,7 +4,7 @@ require_once 'config.php';
 // Initialize variables
 $error = '';
 $subscriberInfo = null;
-$subscriberId = isset($_POST['subscriberId']) ? $_POST['subscriberId'] : '';
+$subscriberId = isset($_POST['subscriberId']) ? trim($_POST['subscriberId']) : 'ZTljMjM2YmI4M2NjMDYwNDRlMjAzZmI3NDlhYTRlYTEzNTE3ZDIxNzJmYmUwMDg3MGU1Y2NhYzIzYjI4Mzg4YTpncmFtZWVucGhvbmU';
 $debugInfo = [];
 
 // Process form submission
