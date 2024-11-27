@@ -4,21 +4,20 @@ require_once 'config.php';
 // Initialize variables
 $error = '';
 $subscriberInfo = null;
-$msisdn = isset($_POST['msisdn']) ? $_POST['msisdn'] : '';
+$subscriberId = isset($_POST['subscriberId']) ? $_POST['subscriberId'] : '';
 $debugInfo = [];
 
 // Process form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (empty($msisdn)) {
-        $error = 'Phone number is required';
+    if (empty($subscriberId)) {
+        $error = 'Subscriber ID is required';
     } else {
         try {
             // Prepare the request data
             $data = [
                 'applicationId' => APPLICATION_ID,
                 'password' => APPLICATION_PASSWORD,
-                'version' => '2.0',
-                'msisdn' => $msisdn
+                'subscriberId' => $subscriberId
             ];
 
             // Save request data for debugging
@@ -160,24 +159,22 @@ function formatDate($dateStr) {
 
                         <form method="post" class="mb-4">
                             <div class="mb-3">
-                                <label for="msisdn" class="form-label">Phone Number</label>
+                                <label for="subscriberId" class="form-label">Subscriber ID</label>
                                 <div class="input-group input-group-lg">
                                     <span class="input-group-text">
-                                        <i class="bi bi-phone"></i>
+                                        <i class="bi bi-person"></i>
                                     </span>
                                     <input type="text" 
                                            class="form-control" 
-                                           id="msisdn" 
-                                           name="msisdn" 
-                                           value="<?php echo htmlspecialchars($msisdn); ?>" 
-                                           placeholder="Enter phone number (e.g., 01773301138)"
+                                           id="subscriberId" 
+                                           name="subscriberId" 
+                                           value="<?php echo htmlspecialchars($subscriberId); ?>" 
+                                           placeholder="Enter subscriber ID"
                                            required>
                                 </div>
                             </div>
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-primary btn-lg btn-check-status">
-                                    <i class="bi bi-search"></i> Check Status
-                                </button>
+                                <button type="submit" class="btn btn-primary btn-lg">Check Status</button>
                             </div>
                         </form>
                         
