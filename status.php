@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $data = [
                 'applicationId' => APPLICATION_ID,
                 'password' => APPLICATION_PASSWORD,
-                'subscriberId' => $subscriberId
+                'subscriberId' => 'tel:'.$subscriberId
             ];
 
             // Save request data for debugging

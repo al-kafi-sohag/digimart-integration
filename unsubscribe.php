@@ -6,6 +6,7 @@ $error = '';
 $success = '';
 $subscriberId = isset($_POST['subscriberId']) ? trim($_POST['subscriberId']) : 'ZTljMjM2YmI4M2NjMDYwNDRlMjAzZmI3NDlhYTRlYTEzNTE3ZDIxNzJmYmUwMDg3MGU1Y2NhYzIzYjI4Mzg4YTpncmFtZWVucGhvbmU';
 $debugInfo = [];
+$responseData = null;
 
 // Process form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -56,12 +57,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             // Decode JSON response
             $result = json_decode($response, true);
+            $responseData = $result;
             
             if ($result) {
                 if ($httpCode === 200) {
-                    $success = 'Successfully unsubscribed from the service.';
+                    $success = 'Successfully processed unsubscription request.';
                 } else {
-                    throw new Exception("API Error: " . ($result['message'] ?? 'Unknown error'));
+                    throw new Exception("API Error: " . ($result['statusDetail'] ?? 'Unknown error'));
                 }
             } else {
                 throw new Exception('Failed to decode API response: ' . json_last_error_msg());
@@ -93,6 +95,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             padding: 12px 24px;
             font-size: 1.1rem;
         }
+        .details-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .details-table tr:last-child td {
+            border-bottom: none;
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -104,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="d-flex justify-content-between align-items-center">
                             <h3 class="mb-0">Unsubscribe from Service</h3>
                             <a href="index.php" class="btn btn-outline-secondary btn-sm">
-                                <i class="bi bi-house-door"></i> Home
+                                <i class="bi bi-arrow-left"></i> Back to Dashboard
                             </a>
                         </div>
                     </div>
@@ -121,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <?php endif; ?>
 
-                        <form method="POST" action="">
+                        <form method="POST" action="" class="mb-4">
                             <div class="mb-4">
                                 <label for="subscriberId" class="form-label">Subscriber ID</label>
                                 <input type="text" class="form-control form-control-lg" id="subscriberId" 
@@ -134,6 +143,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </button>
                             </div>
                         </form>
+
+                        <?php if ($responseData): ?>
+                        <div class="mt-4">
+                            <h4 class="mb-3">Response Details</h4>
+                            <table class="table details-table">
+                                <tbody>
+                                    <tr>
+                                        <td width="40%"><strong>Version</strong></td>
+                                        <td><?php echo htmlspecialchars($responseData['version'] ?? 'N/A'); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Status Code</strong></td>
+                                        <td><?php echo htmlspecialchars($responseData['statusCode'] ?? 'N/A'); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Status Detail</strong></td>
+                                        <td><?php echo htmlspecialchars($responseData['statusDetail'] ?? 'N/A'); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Request ID</strong></td>
+                                        <td><?php echo htmlspecialchars($responseData['requestId'] ?? 'N/A'); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Subscription Status</strong></td>
+                                        <td>
+                                            <span class="badge bg-<?php echo ($responseData['subscriptionStatus'] ?? '') === 'UNREGISTERED.' ? 'success' : 'warning'; ?>">
+                                                <?php echo htmlspecialchars($responseData['subscriptionStatus'] ?? 'N/A'); ?>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
