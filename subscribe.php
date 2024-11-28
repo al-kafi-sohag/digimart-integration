@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             // Create signature
             $signature_data = API_KEY . '|' . $current_time_utc . '|' . API_SECRET;
-            $hashed_signature = hash('sha256', $signature_data);
+            $hashed_signature = hash('sha512', $signature_data);
             
             // Build the API endpoint URL
             $subscriptionUrl = SUBSCRIBE_API . '?' . http_build_query([
