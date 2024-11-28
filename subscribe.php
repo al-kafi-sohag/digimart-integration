@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'requestTime' => $current_time_utc,
                 'signature' => $hashed_signature,
                 'redirectUrl' => REDIRECT_URL,
-                // 'msisdn' => $msisdn
+                'msisdn' => $msisdn,
             ]);
             
         } catch (Exception $e) {
